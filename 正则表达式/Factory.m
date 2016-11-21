@@ -11,7 +11,7 @@
 @implementation Factory
 #pragma mark - 判断是否是手机号码(合法返回NO)
 + (BOOL)validateMobile:(NSString *)phoneNumber{
-    NSString * mobile = @"^1(3[0-9]|5[0-35-9]|8[0-9]|7[0167]|47)\\d{8}$";
+    NSString * mobile = kRePhoneNumber;
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", mobile];
     return [predicate evaluateWithObject:phoneNumber];
 }
@@ -23,21 +23,21 @@
 
 #pragma mark - 判断字符串是否合法(合法返回YES)
 + (BOOL)validateStrLegal:(NSString *)str{
-    NSString *regex=@"[^%&',;=?$\x22]+";
+    NSString *regex = kReString;
     NSPredicate *predicate=[NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [predicate evaluateWithObject:str];
 }
 
 #pragma mark - 判断密码是否合法(合法返回YES)
 + (BOOL)validatePassword:(NSString *)password{
-    NSString *regex=@"(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{8,20}";
+    NSString *regex = kRePassword;
     NSPredicate *predicate=[NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [predicate evaluateWithObject:password];
 }
 
 #pragma mark - 判断金额是否合法(合法返回YES)
 + (BOOL)validateMoney:(NSString *)money{
-    NSString *regex=@"^[0-9]+(.[0-9]{0,2})?$";
+    NSString *regex = kReMoneyFormate;
     NSPredicate *predicate=[NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [predicate evaluateWithObject:money];
 }
@@ -79,8 +79,13 @@
 }
 #pragma mark - PIN
 + (BOOL)validatePINCode:(NSString *)code{
-    NSString * reg = @"^(?=.*\\d+)(?!.*?([\\d])\\1{4})[\\d]{5}$";
+    NSString * reg = kRePIN;
     NSPredicate *regexTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",reg];
     return  [regexTest evaluateWithObject:reg];
+}
++ (BOOL)verificationWeiXinContent:(NSString *)content{
+    NSString * regex = kReWeiXin;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [predicate evaluateWithObject:content];
 }
 @end
